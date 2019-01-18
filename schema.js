@@ -21,6 +21,10 @@ exports.typeDefs = gql`
     favorites: [Recipe]
   }
 
+  type Token {
+    token: String!
+  }
+
   type Query {
     getAllRecipes: [Recipe]
   }
@@ -33,5 +37,7 @@ exports.typeDefs = gql`
       instructions: String!
       username: String
     ): Recipe
+
+    signUpUser(username: String!, email: String!, password: String!): Token
   }
 `;
