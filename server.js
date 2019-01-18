@@ -29,6 +29,13 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// set up JWT authentication middleware
+app.use(async (req, res, next) => {
+  const token = req.headers['authorization'];
+  console.log(token);
+  next();
+});
+
 // Create GraphiQL Application
 const server = new ApolloServer({
   typeDefs,
