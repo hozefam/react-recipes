@@ -2,6 +2,7 @@ const { gql } = require('apollo-server-express');
 
 exports.typeDefs = gql`
   type Recipe {
+    _id: ID
     name: String!
     category: String!
     description: String!
@@ -12,6 +13,7 @@ exports.typeDefs = gql`
   }
 
   type User {
+    _id: ID
     username: String!
     password: String!
     email: String!
