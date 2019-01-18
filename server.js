@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
 require('dotenv').config({ path: 'variables.env' });
 
 const Recipe = require('./models/Recipe');
@@ -20,6 +22,12 @@ mongoose
 
 // Initialize application
 const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+};
+app.use(cors(corsOptions));
 
 // Create GraphiQL Application
 const server = new ApolloServer({
