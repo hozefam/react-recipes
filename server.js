@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const cors = require('cors');
 
@@ -33,6 +34,16 @@ app.use(cors(corsOptions));
 app.use(async (req, res, next) => {
   const token = req.headers['authorization'];
   console.log(token);
+
+  if (token !== 'null') {
+    try {
+      const currentUser = await jwt.verify(token, process.env.SECRET);
+      req.currentUser = currentUser;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   next();
 });
 
@@ -40,7 +51,7 @@ app.use(async (req, res, next) => {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ Recipe, User })
+  context: ({ req }) => ({ Recipe, User, currentUser: req.currentUser })
 });
 server.applyMiddleware({
   app,
